@@ -9,8 +9,9 @@ plugins {
 
 }
 test {
-    finalizedBy jacocoTestReport
+    useJUnitPlatform()
 }
+
 
 group = 'com.example'
 version = '1.0-SNAPSHOT'
