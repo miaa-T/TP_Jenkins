@@ -2,11 +2,12 @@ pipeline {
     agent any
 
     stages {
-        stage('Run Unit Tests') {
-            steps {
-                sh './gradlew test'
-            }
-        }
+       stage('Run Unit Tests') {
+           steps {
+               sh './gradlew test --continue'
+           }
+       }
+
         stage('Archive Test Results') {
             steps {
                 junit 'build/test-results/test/*.xml'
