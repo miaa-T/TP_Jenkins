@@ -5,13 +5,14 @@ plugins {
     id 'application'
     id 'jacoco'
     id("org.sonarqube") version "4.4.0.3356"
+    id "com.github.spacialcircumstances.gradle-cucumber-reporting" version "0.1.25"
     id 'maven-publish'
+    id("de.zebrajaeger.sendMail") version "0.2.2"
 
 }
 test {
-    useJUnitPlatform()
+    finalizedBy jacocoTestReport
 }
-
 
 group = 'com.example'
 version = '1.0-SNAPSHOT'
@@ -64,7 +65,7 @@ sendMail {
     mail {
         from "mahdia.b964@gmail.com"
         to "mahdia.toubal@gmail.com"
-                body "Hello!!"
+        body "Hello!!"
     }
 }
 
