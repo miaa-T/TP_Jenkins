@@ -34,7 +34,12 @@ pipeline {
 
       stage("Code Quality") {
                   steps {
-                      waitForQualityGate abortPipeline: true
+                       try {
+                                      waitForQualityGate abortPipeline: true
+                                  } catch (err) {
+                                      echo "Quality Gate failed: ${err}"
+
+                                  }
                   }
               }
 

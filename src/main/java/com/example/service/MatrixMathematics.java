@@ -118,8 +118,11 @@ public class MatrixMathematics {
 	 * @throws NoSquareException
 	 */
 	public static Matrix inverse(Matrix matrix) throws NoSquareException {
-		return (transpose(cofactor(matrix)).multiplyByConstant(1.0/determinant(matrix)));
-	}
+		double determinantValue = determinant(matrix);
+		if (determinantValue == 0) {
+			throw new IllegalArgumentException("Matrix is singular and cannot be inverted.");
+		}
+		return transpose(cofactor(matrix)).multiplyByConstant(1.0 / determinantValue);	}
 	
 	
 }
