@@ -21,26 +21,13 @@ pipeline {
 
             }
         }
-        stage('Quality Gate Check') {
-            steps {
-                script {
-                    // Retry logic to ensure SonarQube has completed analysis
-                    def qualityGate = null
-                    for (int i = 0; i < 5; i++) { // Retry 5 times
-                        try {
-                            qualityGate = waitForQualityGate()
-                            if (qualityGate.status == 'OK') break
-                        } catch (Exception e) {
-                            echo "Retrying Quality Gate Check... Attempt ${i + 1}"
-                            sleep(5) // Wait for 10 seconds between retries
-                        }
-                    }
-                    if (qualityGate == null || qualityGate.status != 'OK') {
-                        error "Pipeline failed due to Quality Gate failure: ${qualityGate?.status ?: 'Unknown'}"
-                    }
-                }
-            }
-        }
+
+
+      stage("Code Quality") {
+                  steps {
+                      waitForQualityGate abortPipeline: true
+                  }
+              }
         stage("Build") {
             steps {
                 bat './gradlew build'
