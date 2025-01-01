@@ -28,7 +28,7 @@ pipeline {
                     def qualityGate = null
                     for (int i = 0; i < 5; i++) { // Retry 5 times
                         try {
-                           
+
                             qualityGate = waitForQualityGate()
                             echo  "status of quality gate : ${qualityGate?.status ?:}"
                             if (qualityGate == null || qualityGate.status == 'OK') break
@@ -49,32 +49,6 @@ pipeline {
                 archiveArtifacts 'build/libs/*.jar'
             }
         }
-        stage("Deploy") {
-            steps {
-                script {
-                    bat './gradlew publish'
-                }
-            }
-            post {
-                failure {
-                    script {
-                        deployStatus = 'failure'
-                    }
-                }
-                success {
-                    script {
-                        deployStatus = 'success'
-                    }
-                }
-            }
-        }
-        stage("Notification") {
-            steps {
-                notifyEvents message: deployStatus, token: 'yr39rpilgauqk4ryend8tulapje7cb36'
-                mail to: 'km_hathat@esi.dz',
-                     subject: "Deployment ${deployStatus}",
-                     body: "Deployment status: ${deployStatus}"
-            }
-        }
+        
     }
 }
