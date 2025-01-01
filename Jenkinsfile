@@ -16,9 +16,9 @@ pipeline {
         }
         stage("Code Analysis") {
             steps {
-                withSonarQubeEnv('sonar') {
+
                     bat "./gradlew sonar"
-                }
+              
             }
         }
         stage('Quality Gate Check') {
