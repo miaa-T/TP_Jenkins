@@ -32,7 +32,7 @@ pipeline {
                             if (qualityGate.status == 'OK') break
                         } catch (Exception e) {
                             echo "Retrying Quality Gate Check... Attempt ${i + 1}"
-                            sleep(10) // Wait for 10 seconds between retries
+                            sleep(20) // Wait for 10 seconds between retries
                         }
                     }
                     if (qualityGate == null || qualityGate.status != 'OK') {
