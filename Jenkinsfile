@@ -2,17 +2,13 @@ pipeline {
     agent any
 
     stages {
-       stage('Run Unit Tests') {
-           steps {
-               sh './gradlew test --continue'
-           }
-       }
-
-        stage('Archive Test Results') {
+        stage('Test') {
             steps {
-                junit 'build/test-results/test/*.xml'
+                bat 'gradlew.bat test'
+                junit 'build/reports/tests/test/*.xml' // Archivage des résultats
             }
         }
+
         stage('Cucumber Reports') {
             steps {
                 cucumber 'build/reports/cucumber.json'

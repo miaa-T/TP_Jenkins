@@ -53,6 +53,7 @@ def slackWebhookUrl = "https://hooks.slack.com/services/T083YV3K90R/B083L9H97D0/
 dependencies {
     testImplementation 'io.cucumber:cucumber-java:6.0.0'
     testImplementation 'io.cucumber:cucumber-junit:6.0.0'
+    testImplementation 'org.junit.jupiter:junit-jupiter:5.9.2'
 
 }
 sendMail {
