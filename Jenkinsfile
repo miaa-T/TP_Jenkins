@@ -21,35 +21,11 @@ pipeline {
                 }
             }
         }
-        stage('Quality Gate Check') {
-            steps {
-                script {
-                    def qualityGate = null
-                    def maxAttempts = 10 // Nombre maximum de tentatives
-                    def waitTime = 30 // Temps d'attente entre chaque tentative (en secondes)
-
-                    for (int i = 0; i < maxAttempts; i++) {
-                        try {
-                            qualityGate = waitForQualityGate()
-                            if (qualityGate.status == 'OK' || qualityGate.status == 'WARN') {
-                                echo "Quality Gate passed with status: ${qualityGate.status}"
-                                break
-                            }
-                        } catch (Exception e) {
-                            echo "Retrying Quality Gate Check... Attempt ${i + 1}"
-                        }
-                        if (i < maxAttempts - 1) {
-                            sleep(waitTime)
-                        }
-                    }
-
-                    if (qualityGate == null || qualityGate.status == 'ERROR' || qualityGate.status == 'FAILED') {
-                        error "Pipeline failed due to Quality Gate failure: ${qualityGate?.status ?: 'Unknown'}"
-                    }
-                }
-            }
-        }
-
+         stage("Code Quality") {
+                          steps {
+                              waitForQualityGate abortPipeline: true
+                          }
+                      }
         stage("Build") {
             steps {
                 bat './gradlew build'
