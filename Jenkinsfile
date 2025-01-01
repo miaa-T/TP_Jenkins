@@ -32,16 +32,16 @@ pipeline {
 
 
 
-      stage("Code Quality") {
+       stage('Quality Gate Check') {
                   steps {
-                       try {
-                                      waitForQualityGate abortPipeline: true
-                                  } catch (err) {
-                                      echo "Quality Gate failed: ${err}"
-
-                                  }
+                      script {
+                          def qualityGate = waitForQualityGate()  // Attend le résultat de l’analyse
+                          if (qualityGate.status != 'OK') {       // Vérifie si l’état est différent de OK
+                              error "Pipeline failed due to Quality Gate failure: ${qualityGate.status}"
+                          }
+                      }
                   }
-              }
+       }
 
 
 
