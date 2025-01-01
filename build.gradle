@@ -17,6 +17,12 @@ version = '1.0-SNAPSHOT'
 
 sourceCompatibility = 1.8
 
+sonarqube {
+    properties {
+        property "sonar.host.url", "http://localhost:9000" // Remplacez par l'URL de votre serveur SonarQube
+        property "sonar.login", "sqa_a114d3990d77c94df6522388ada46c6d8f345358" // Remplacez par votre token d'authentification
+    }
+}
 repositories {
     mavenCentral()
 }
