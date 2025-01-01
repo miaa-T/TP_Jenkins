@@ -30,6 +30,7 @@ pipeline {
                         try {
                              sleep(50)
                             qualityGate = waitForQualityGate()
+                            echo  "status of quality gate : ${qualityGate?.status ?:}"
                             if (qualityGate == null || qualityGate.status == 'OK') break
                         } catch (Exception e) {
                             echo "Retrying Quality Gate Check... Attempt ${i + 1}"
