@@ -58,13 +58,5 @@ pipeline {
                 }
             }
         }
-        stage("Notification") {
-            steps {
-                notifyEvents message: deployStatus, token: 'yr39rpilgauqk4ryend8tulapje7cb36'
-                mail to: 'km_toubal@esi.dz',
-                     subject: "Deployment ${deployStatus}",
-                     body: "Deployment status: ${deployStatus}"
-            }
-        }
-    }
+}
 }
