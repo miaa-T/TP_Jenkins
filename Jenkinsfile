@@ -49,6 +49,32 @@ pipeline {
                 archiveArtifacts 'build/libs/*.jar'
             }
         }
-        
+        stage("Deploy") {
+            steps {
+                script {
+                    bat './gradlew publish'
+                }
+            }
+            post {
+                failure {
+                    script {
+                        deployStatus = 'failure'
+                    }
+                }
+                success {
+                    script {
+                        deployStatus = 'success'
+                    }
+                }
+            }
+        }
+        stage("Notification") {
+            steps {
+                notifyEvents message: deployStatus, token: 'yr39rpilgauqk4ryend8tulapje7cb36'
+                mail to: 'km_hathat@esi.dz',
+                     subject: "Deployment ${deployStatus}",
+                     body: "Deployment status: ${deployStatus}"
+            }
+        }
     }
 }
