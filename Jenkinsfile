@@ -26,8 +26,8 @@ pipeline {
 
           stage("Code Quality") {
                           steps {
-                            sleep(60)
-                            timeout(time: 1, unit: 'MINUTES') {
+                   
+                            timeout(time: 2, unit: 'MINUTES') {
                                 def qg = waitForQualityGate()
                                 print "Finished waiting"
                                 if (qg.status != 'OK') {
