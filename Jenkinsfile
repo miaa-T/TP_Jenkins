@@ -28,7 +28,7 @@ pipeline {
                     def qualityGate = null
                     for (int i = 0; i < 5; i++) { // Retry 5 times
                         try {
-                             sleep(50)
+                           
                             qualityGate = waitForQualityGate()
                             echo  "status of quality gate : ${qualityGate?.status ?:}"
                             if (qualityGate == null || qualityGate.status == 'OK') break
@@ -36,7 +36,7 @@ pipeline {
                             echo "Retrying Quality Gate Check... Attempt ${i + 1}"
                         }
                     }
-                    if (qualityGate == null || qualityGate.status != 'OK') {
+                    if ( qualityGate.status != 'OK') {
                         error "Pipeline failed due to Quality Gate failure: ${qualityGate?.status ?: 'Unknown'}"
                     }
                 }
